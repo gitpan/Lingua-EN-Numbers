@@ -19,6 +19,12 @@ WriteMakefile(
     'NAME'	=> 'Lingua::EN::Numbers',
     'VERSION_FROM' => 'lib/Lingua/EN/Numbers.pm', # finds $VERSION
     'dist'        => { COMPRESS => 'gzip -6f', SUFFIX => 'gz', },
+    PREREQ_PM      => {
+        'Exporter' => 0,
+        'strict' => 0,
+        'warnings' => 0,
+        'vars' => 0,
+    },
 
     ($mm_ver >= 6.31
         ? (LICENSE => 'gpl')
@@ -38,6 +44,27 @@ WriteMakefile(
                 },
             },
           })
+    ),
+
+    ($mm_ver >= 6.48
+        ? (MIN_PERL_VERSION => 5.006)
+        : ()
+    ),
+
+    ($mm_ver >= 6.52
+        ? (CONFIGURE_REQUIRES => {
+                'ExtUtils::MakeMaker' => 6.30,
+          })
+        : ()
+    ),
+
+    ($mm_ver >= 6.64
+        ? (TEST_REQUIRES => {
+                'Test' => 0,
+                'Test::More' => 0.88,
+                'bigint' => 0,
+          })
+        : ()
     ),
 
 );

@@ -6,13 +6,14 @@ require Exporter;
 @ISA = qw(Exporter);
 
 use strict;
+use warnings;
 BEGIN { *DEBUG = sub () {0} unless defined &DEBUG } # setup a DEBUG constant
 use vars qw(
  @EXPORT @EXPORT_OK $VERSION
  $MODE $TRUE $FALSE
  %D %Card2ord %Mult
 );
-$VERSION = '1.05';
+$VERSION = '1.06';
 @EXPORT    = ();
 @EXPORT_OK = qw( num2en num2en_ordinal );
 
@@ -320,15 +321,12 @@ C<get_string()>.
 
 L<http://neilb.org/reviews/spell-numbers.html> - a review of CPAN modules for converting numbers into English words.
 
-L<Lingua::EN::Nums2Words>
-
-L<Math::BigInt::Named>
-
-L<Number::Spell>
-
-L<Lingua::EN::Numbers::Ordinate>
-
-L<Lingua::EN::Numbers::Years>
+L<Lingua::EN::Nums2Words>,
+L<Math::BigInt::Named>,
+L<Number::Spell>,
+L<Lingua::EN::Numbers::Ordinate>,
+L<Lingua::EN::Numbers::Years>,
+L<Lingua::EN::Inflect>.
 
 =head1 COPYRIGHT
 
