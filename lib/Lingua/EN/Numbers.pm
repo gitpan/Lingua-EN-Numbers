@@ -1,43 +1,20 @@
 
-require 5.004;  # Time-stamp: "2005-01-05 17:12:51 AST"
 package Lingua::EN::Numbers;
 
 require Exporter;
 @ISA = qw(Exporter);
 
+use 5.006;
 use strict;
 use warnings;
 BEGIN { *DEBUG = sub () {0} unless defined &DEBUG } # setup a DEBUG constant
 use vars qw(
  @EXPORT @EXPORT_OK $VERSION
- $MODE $TRUE $FALSE
  %D %Card2ord %Mult
 );
-$VERSION = '1.07';
+$VERSION = '2.00';
 @EXPORT    = ();
 @EXPORT_OK = qw( num2en num2en_ordinal );
-
-#--------------------------------------------------------------------------
-# Here begins the old junk, including mock-object stuff:
-
-$TRUE = 1; $FALSE = 0; $MODE = "American";
-sub import { 
-  @_ = grep { $_ ne 'American' and $_ ne 'British' } @_;
-  goto &Exporter::import;
-}
-
-sub new {
-  my $class = shift;
-  my $obj = bless [undef],  ref($class) || $class;
-  $obj->parse($_[0]);
-  return $obj;
-}
-
-sub parse { $_[0][0] = $_[1]; return 1; }
-sub get_string { num2en( $_[0][0] ); }
-
-# End of legacy stuff.
-#--------------------------------------------------------------------------
 
 @D{0 .. 20, 30,40,50,60,70,80,90} = qw|
  zero
@@ -291,11 +268,11 @@ prints:
 
 =head1 DESCRIPTION
 
-Lingua::EN::Numbers provides a function C<num2en> that converts
-a number (such as 123) into English text
-(such as "one hundred and twenty-three").
-It also provides a function C<num2en_ordinal> that converts
-a number into the ordinal form in words,
+This module provides a function C<num2en>,
+which converts a number (such as 123) into English text
+("one hundred and twenty-three").
+It also provides a function C<num2en_ordinal>,
+which converts a number into the ordinal form in words,
 so 54 becomes "fifty-fourth".
 
 If you pass either function something that doesn't look like a number,
@@ -311,26 +288,62 @@ Any commas in the input numbers are ignored.
 
 =head1 LEGACY INTERFACE
 
-B<Note:> this legacy interface is now deprecated, and will be dropped
-in a future release. Please let me (Neil) know if you're using this
-interface, and I'll do something to continue supporting you.
-
-For some amount of backward compatibility with the old (before 1.01)
-version of this module, the old OO interface is supported, where you can
-construct a number object with C<new(I<[optionalvalue]>)>, change its
-value with C<parse(I<value>)>, and get its Engish expression with
-C<get_string()>.
+The first version of this module, 0.01 released in May 1995,
+had an OO interface. This was finally dropped in the 1.08 release.
 
 =head1 SEE ALSO
 
 L<http://neilb.org/reviews/spell-numbers.html> - a review of CPAN modules for converting numbers into English words.
 
-L<Lingua::EN::Nums2Words>,
-L<Math::BigInt::Named>,
-L<Number::Spell>,
-L<Lingua::EN::Numbers::Ordinate>,
-L<Lingua::EN::Numbers::Years>,
-L<Lingua::EN::Inflect>.
+The following modules will convert a number into words:
+
+=over 4
+
+=item
+
+L<Lingua::EN::Inflect> provides a lot more besides, including conversion
+of singular to plural, selecting whether to use 'an' or 'a' before a word,
+and plenty more
+
+=item 
+
+L<Lingua::EN::Nums2Words> provides similar functionality,
+but can't handle exponential notation, and 3.14 produces
+"three and fourteen hundredths" instead of "three point one four".
+
+=item 
+
+L<Math::BigInt::Named> doesn't work.
+
+=item
+
+L<Number::Spell> doesn't handle negative numbers, exponential notation,
+or non-integer real numbers. The generated text doesn't contain any commas
+or the word 'and', so the results for long numbers don't scan.
+
+=back
+
+There are other modules which provide related, but not identical,
+functionality:
+
+=over 4
+
+=item
+
+L<Lingua::EN::Numbers::Ordinate> provides a function that will convert
+a cardinal number (such as "3") to an ordinal ("3rd").
+
+=item
+
+L<Lingua::EN::Numbers::Years> provides a function that will convert
+a year in numerals (eg "1984") into words ("nineteen eighty-four").
+
+=item
+
+L<Lingua::EN::Fractions> provides a function that will convert
+a numeric fraction (eg "3/4") into words ("three quarters").
+
+=back
 
 =head1 REPOSITORY
 

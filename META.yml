@@ -28,4 +28,4 @@ requires:
   warnings: '0'
 resources:
   repository: git://github.com/neilbowers/Lingua-EN-Numbers.git
-version: '1.07'
+version: '2.00'
